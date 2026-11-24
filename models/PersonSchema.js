@@ -13,7 +13,7 @@ const personSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ["Librarian", "Assistant", "Accountant", "Security", "Other"],
+        enum: ["Librarian","Manager", "Assistant", "Accountant", "Security", "Other"],
         required: true
     },
     mobile: {
@@ -40,6 +40,6 @@ const personSchema = new mongoose.Schema({
     timestamps: true
 });
 
-const Person = mongoose.model("Person", personSchema);
+const person = mongoose.model("Person", personSchema);
 
-module.exports = Person;
+module.exports = person;

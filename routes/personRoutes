@@ -1,0 +1,87 @@
+const express=require("express");
+const router=express.Router();
+
+const person=require("../models/PersonSchema");
+
+// post api
+router.post("/person",async(req,res)=>{
+    try
+    {
+        const data=req.body;
+        const response=await person.create(data);
+        // const newPerson=new person(data);
+        // const response=await newPerson.save();
+
+        console.log("data saved");
+        res.status(201).json(response);
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.status(500).json({error:"internal server error"})
+    }
+})
+
+// get api
+router.get("/person",async(req,res)=>{
+    try
+    {
+        const data=await person.find();
+        console.log("data fatched");
+        res.status(200).json(data);
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.status(500).json({error :"intenal server errro"})
+    }
+})
+
+//update
+
+router.put("/person/:id",async(req,res)=>{
+    try
+    {
+        const personId=req.params.id;
+        const updateData=req.body;
+        const response=await person.findByIdAndUpdate(personId,updateData,{
+            new:true,
+            runValidators:true
+        })
+        if(!response)
+        {
+            return res.status(404).json({error :"data hot found"})
+        }
+        console.log("data updated successfully");
+        res.status(200).json(response)
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.status(500).json({error:"internal server error"})
+    }
+})
+
+// delete api
+router.delete("/person/:id",async(req,res)=>{
+    try
+    {
+        const personId=req.params.id;
+        const response=await person.findByIdAndDelete(personId);
+
+        if(!response)
+        {
+            return res.status(404).json({error : "data not found"})
+        }
+        console.log("data delete successfully");
+        res.status(200).json({message :"data deleted"})
+    }
+    catch(error)
+    {
+        console.log(error);
+        res.status(500).json({error :"internal server error"})
+    }
+})
+
+
+module.exports=router;

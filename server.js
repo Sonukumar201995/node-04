@@ -8,7 +8,9 @@ const person=require("./models/PersonSchema")
 // body-parser middleware
 app.use(express.json())
 
-
+// import router crud operation
+const personRoutes=require("./routes/PersonRoutes");
+app.use("/",personRoutes)
 
 app.get("/",(req,res)=>{
     res.send("welcome to our Employee Information system")
