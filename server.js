@@ -12,6 +12,20 @@ app.use(express.json())
 const personRoutes=require("./routes/PersonRoutes");
 app.use("/",personRoutes)
 
+
+// login Request middleware
+
+
+const logRequest = (req, res, next) => {
+    console.log(`${new Date().toLocaleString()}
+    Request Method: ${req.method}
+    URL: ${req.originalUrl}`);
+
+    next();
+};
+
+app.use(logRequest);
+
 app.get("/",(req,res)=>{
     res.send("welcome to our Employee Information system")
 })
