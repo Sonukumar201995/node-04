@@ -5,6 +5,12 @@ const app=express();
 const db=require("./db")  
 const person=require("./models/PersonSchema")
 
+
+// passport implement
+const passport = require("./auth");
+app.use(passport.initialize());
+const local = passport.authenticate("local", {session: false});
+
 // body-parser middleware
 app.use(express.json())
 
@@ -26,7 +32,7 @@ const logRequest = (req, res, next) => {
 
 app.use(logRequest);
 
-app.get("/",(req,res)=>{
+app.get("/",local,(req,res)=>{
     res.send("welcome to our Employee Information system")
 })
 

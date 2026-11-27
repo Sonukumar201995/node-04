@@ -35,8 +35,18 @@ const personSchema = new mongoose.Schema({
     salary: {
         type: Number,
         min: 0
-    }
-}, {
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+},
+{
     timestamps: true
 });
 
